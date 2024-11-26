@@ -1,52 +1,68 @@
-import {createContext, useEffect, useState} from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import React, { createContext, useState, useEffect, useContext } from 'react';
+import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc, query, where } from 'firebase/firestore';
+import { db } from '../config/FirebaseConfig';
+import { AuthContext } from './AuthContext';
 
-const CartoesEstudoContext = createContext()
+const CartoesEstudoContext = createContext();
 
-export const CartoesEstudoProvider = ({children})=>{
+export const ProvedorCartoesEstudo = ({ children }) => {
+    const [cartoes, setCartoes] = useState([]);
+    const { user } = useContext(AuthContext); // Pega o usuário autenticado
 
-    const [cartoes, setCartoes] = useState([])
+    useEffect(() => {
+        if (user) {
+            carregarCartoes();
+        }
+    }, [user]);
 
-    useEffect(async () => {
-        await carregarCartoes()
-    }, []);
+    const carregarCartoes = async () => {
+        try {
+            const q = query(collection(db, 'cartoes'), where('uid', '==', user.uid)); // Filtra cards pelo UID do usuário
+            const cartoesSnapshot = await getDocs(q);
+            const cartoesList = cartoesSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setCartoes(cartoesList);
+        } catch (error) {
+            console.error('Erro ao carregar cartões:', error);
+        }
+    };
 
-    const carregarCartoes = async () =>{
-        const cartoesArmazenados = await AsyncStorage.getItem('cartoes');
+    const adicionarCartao = async (cartao) => {
+        try {
+            const novoCartao = { ...cartao, uid: user.uid }; // Adiciona o UID do usuário ao novo card
+            const docRef = await addDoc(collection(db, 'cartoes'), novoCartao);
+            setCartoes([...cartoes, { id: docRef.id, ...novoCartao }]);
+            console.log('Cartão adicionado ao Firestore:', novoCartao);
+        } catch (error) {
+            console.error('Erro ao adicionar cartão:', error);
+        }
+    };
 
-        if(cartoesArmazenados.length > 0)
-            setCartoes(JSON.parse(cartoesArmazenados));
-    }
-
-    const adicionarCartao = async (cartao) =>{
-        if(!cartao) throw new Error('Cartão para adicionar inválido')
-        const novosCartoes = [...cartoes, {...cartao, id: Date.now()}]
-        setCartoes(novosCartoes);
-
-        await AsyncStorage.setItem('cartoes', JSON.stringify(novosCartoes));
-    }
-
-    const atualizarCartao = async  (id, atualizacoes)=>{
-        const cartoesAtualizados = cartoes.map(cartao =>
-        cartao.id === id ? {
-            ...cartao, ...atualizacoes
-        } : cartao)
-        setCartoes(cartoesAtualizados);
-        await AsyncStorage.setItem('cartoes', JSON.stringify(cartoesAtualizados));
-    }
+    const atualizarCartao = async (id, atualizacoes) => {
+        try {
+            const cartaoRef = doc(db, 'cartoes', id);
+            await updateDoc(cartaoRef, atualizacoes);
+            setCartoes(cartoes.map(cartao => (cartao.id === id ? { ...cartao, ...atualizacoes } : cartao)));
+            console.log('Cartão atualizado:', { id, ...atualizacoes });
+        } catch (error) {
+            console.error('Erro ao atualizar cartão:', error);
+        }
+    };
 
     const excluirCartao = async (id) => {
-        const cartoesAposExclusao = cartoes.filter(cartao => cartao.id !== id)
-
-        setCartoes(cartoesAposExclusao);
-        await AsyncStorage.setItem('cartoes', JSON.stringify(cartoesAposExclusao));
-    }
+        try {
+            await deleteDoc(doc(db, 'cartoes', id));
+            setCartoes(cartoes.filter(cartao => cartao.id !== id));
+            console.log('Cartão excluído com ID:', id);
+        } catch (error) {
+            console.error('Erro ao excluir cartão:', error);
+        }
+    };
 
     return (
-        <CartoesEstudoContext.Provider value={{cartoes, adicionarCartao, atualizarCartao, excluirCartao}}>
+        <CartoesEstudoContext.Provider value={{ cartoes, adicionarCartao, atualizarCartao, excluirCartao }}>
             {children}
         </CartoesEstudoContext.Provider>
-    )
-}
+    );
+};
 
-export default CartoesEstudoContext
+export default CartoesEstudoContext;
