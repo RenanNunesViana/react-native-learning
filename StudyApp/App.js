@@ -9,6 +9,7 @@ import TarefasVencimentoProximoScreen from './src/screens/TarefasVencimentoProxi
 import LoginScreen from './src/screens/LoginScreen';
 import { MaterialIcons } from 'react-native-vector-icons';
 import { TouchableOpacity } from 'react-native';
+import RegistroScreen from "./src/screens/RegisterScreen";
 
 const Stack = createStackNavigator();
 
@@ -41,6 +42,7 @@ const AppNavigator = () => {
             ) : (
                 <>
                     <Stack.Screen name="Login" component={LoginScreen} options={{ title: 'Login' }} />
+                    <Stack.Screen name="Registro" component={RegistroScreen} options={{ title: 'Criar Conta' }} />
                 </>
             )}
         </Stack.Navigator>
