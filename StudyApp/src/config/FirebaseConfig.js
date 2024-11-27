@@ -24,6 +24,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
-
+console.log('FIREBASE API KEY: ' + FIREBASE_API_KEY)
 export const auth = getAuth(app);
 export const db = getFirestore(app)

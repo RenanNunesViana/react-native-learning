@@ -32,7 +32,8 @@ const EdicaoCartaoScreen = ({ route, navigation }) => {
         } else {
             adicionarCartao(dadosCartao);
         }
-        navigation.goBack();
+        navigation.
+        goBack();
     };
 
     const exibirDataPicker = () => setMostraDataPicker(true);
