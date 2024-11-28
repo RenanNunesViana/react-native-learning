@@ -74,7 +74,7 @@ FIREBASE_MEASUREMENT_ID=your-measurement-id
      ```
    - **Via Simulador Android**
      ```bash
-     expo start
+     expo start --android
      ```
   
 
