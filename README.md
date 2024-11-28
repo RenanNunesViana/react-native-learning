@@ -43,7 +43,24 @@ Antes de começar, você precisa ter instalado:
 - Expo CLI (caso use Expo)
 - Um emulador Android ou iOS, ou um dispositivo físico com o app Expo Go.
 
-### Passos para Iniciar
+## Passos para Iniciar
+### Configuração do Arquivo `.env`
+
+Para que a aplicação funcione corretamente, é necessário configurar um arquivo `.env` na raiz do projeto. Este arquivo deve conter as credenciais de acesso ao Firebase.
+
+### Credenciais Necessárias
+
+Adicione as seguintes variáveis ao arquivo `.env`:
+
+```plaintext
+FIREBASE_API_KEY=your-api-key
+FIREBASE_AUTH_DOMAIN=your-auth-domain
+FIREBASE_PROJECT_ID=your-project-id
+FIREBASE_STORAGE_BUCKET=your-storage-bucket
+FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
+FIREBASE_APP_ID=your-app-id
+FIREBASE_MEASUREMENT_ID=your-measurement-id
+```
 
 1. **Clone o Repositório**
    ```bash
@@ -62,23 +79,5 @@ Antes de começar, você precisa ter instalado:
   Via Androide simulador
    ```bash
    expo start
-
-## Configuração do Arquivo `.env`
-
-Para que a aplicação funcione corretamente, é necessário configurar um arquivo `.env` na raiz do projeto. Este arquivo deve conter as credenciais de acesso ao Firebase.
-
-### Credenciais Necessárias
-
-Adicione as seguintes variáveis ao arquivo `.env`:
-
-```plaintext
-FIREBASE_API_KEY=your-api-key
-FIREBASE_AUTH_DOMAIN=your-auth-domain
-FIREBASE_PROJECT_ID=your-project-id
-FIREBASE_STORAGE_BUCKET=your-storage-bucket
-FIREBASE_MESSAGING_SENDER_ID=your-messaging-sender-id
-FIREBASE_APP_ID=your-app-id
-FIREBASE_MEASUREMENT_ID=your-measurement-id
-
   
 
