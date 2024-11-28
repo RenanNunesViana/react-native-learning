@@ -11,7 +11,7 @@ export const ProvedorCartoesEstudo = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            (async () => await carregarCartoes)();
+            (async () => await carregarCartoes())();
         }
     }, [user]);
 
