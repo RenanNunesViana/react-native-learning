@@ -44,13 +44,17 @@ Antes de começar, você precisa ter instalado:
 - Um emulador Android ou iOS, ou um dispositivo físico com o app Expo Go.
 
 ## Passos para Iniciar
-### Configuração do Arquivo `.env`
 
-Para que a aplicação funcione corretamente, é necessário configurar um arquivo `.env` na raiz do projeto. Este arquivo deve conter as credenciais de acesso ao Firebase.
-
-### Credenciais Necessárias
-
-Adicione as seguintes variáveis ao arquivo `.env`:
+1. **Clone o Repositório**
+   ```bash
+   git clone https://github.com/seu-usuario/seu-repositorio.git
+   cd seu-repositorio
+2. **Instale as Dependências**
+   ```bash
+   npm install
+3. **Configure o .env**
+   Para que a aplicação funcione corretamente, é necessário configurar um arquivo `.env` na raiz do projeto. Este arquivo deve conter as credenciais de acesso ao Firebase.
+   Adicione as seguintes variáveis ao arquivo `.env`:
 
 ```plaintext
 FIREBASE_API_KEY=your-api-key
@@ -62,22 +66,15 @@ FIREBASE_APP_ID=your-app-id
 FIREBASE_MEASUREMENT_ID=your-measurement-id
 ```
 
-1. **Clone o Repositório**
-   ```bash
-   git clone https://github.com/seu-usuario/seu-repositorio.git
-   cd seu-repositorio
-2. **Instale as Dependências**
-   ```bash
-   npm install
-3. **Configure o Firebase**
-   Atualize as credencias no arquivo de configuração localizado em config/firebaseConfig.js
-3. **Inicie o Projeto**
-  Via Web
-   ```bash
-   expo start --web
-   Acesse no navegador em http://localhost:19006
-  Via Androide simulador
-   ```bash
-   expo start
+4. **Inicie o Projeto**
+
+   - **Via Web**
+     ```bash
+     expo start --web
+     ```
+   - **Via Simulador Android**
+     ```bash
+     expo start
+     ```
   
 
